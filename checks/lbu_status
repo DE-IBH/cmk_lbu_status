@@ -33,8 +33,8 @@
 
 # time thresholds for monitoring warnings, in seconds
 factory_settings["lbu_status_default"] = {
-    "threshold_warning": 1800,
-    "threshold_critical": 3600
+    "threshold_warning": ( 1800 ),
+    "threshold_critical": ( 3600 )
 }
 
 
@@ -56,12 +56,15 @@ def parse_raw_lbu_status_values(info):
 
 def check_lbu_status(item, params, info):
     values = parse_raw_lbu_status_values(info)
+    warn = params["threshold_warning"]
+    crit = params["threshold_critical"]
+
     for value in values:
         if value["change"] != "deleted":
-            if params["threshold_critical"] <= value["time"]:
+            if crit <= value["time"]:
                 return (2, "File/Folder '" + value["filepath"] + "' has been " + value["change"] +
                         " and hasn't been commited since " + str(value["time"]) + " seconds!")
-            elif params["threshold_warning"] <= value["time"] < params["threshold_critical"]:
+            elif warn <= value["time"] < crit:
                 return (1, "File/Folder '" + value["filepath"] + "' has been " + value["change"] +
                         " and hasn't been commited since " + str(value["time"]) + " seconds!")
         else:
@@ -80,5 +83,6 @@ check_info["lbu_status"] = {
     'inventory_function':      inventory_lbu_status,
     'service_description':     'LBU Status',
     'default_levels_variable': 'lbu_status_default',
+    'group':                   'lbu_status',
     'has_perfdata':            False
 }
