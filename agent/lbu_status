@@ -10,7 +10,6 @@ from datetime import datetime as dt
 try:
     pipeout = sp.check_output(["lbu", "status"])
 except:
-    print "EXIT"
     exit()
 
 current_time = dt.now()
