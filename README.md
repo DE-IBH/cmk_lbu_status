@@ -16,7 +16,7 @@ Download the provided check-mk package `lbu_status-x.y.mkp` and install it using
 
 
 ```console
-# check_mk -P install lbu_status-x.y.mkp
+# mkp install [..]/lbu_status-x.y.mkp
 ```
 
 Setup
