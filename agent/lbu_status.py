@@ -3,15 +3,18 @@
 
 # Put this file into the PLUGINSDIR [$MK_LIBDIR/plugins] of the agent system
 
-import os
+import subprocess as sp
 from datetime import datetime as dt
 
-lbu_status_result = os.popen("lbu status").readlines()
+lbu_status_result_obj = sp.Popen("lbu status", shell=True)
+if lbu_status_result_obj.returncode != 0:
+    exit()
+
 current_time = dt.now()
 
 print "<<<lbu_status>>>"
 
-for result in lbu_status_result:
+for result in lbu_status_result_obj.stdout:
     changemode = result.replace("\n", "").split(" ")[0]
     if len(result.split(" ")) > 2:
         splitted_result = result.replace("\n", "").split(" ")
