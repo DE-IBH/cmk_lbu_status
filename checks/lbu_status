@@ -1,0 +1,84 @@
+#!/usr/bin/python
+# -*- encoding: utf-8; py-indent-offset: 4 -*-
+
+# cmk_lbu_status - check-mk plugin for Alpine Linux lbu status
+#
+# Authors:
+#   Philipp Kilian <liske@ibh.de>
+#
+# Copyright Holder:
+#   2018 (C) IBH IT-Service GmbH [http://www.ibh.de/]
+#
+# License:
+#   This program is free software; you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation; either version 2 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this package; if not, write to the Free Software
+#   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
+
+# Example output
+# changes in seconds change_action file
+# <<<lbu_status>>>
+# 1940 A /etc/added.txt
+# 275 U /etc/modified.txt
+# 0 D /etc/deleted.txt
+
+# time thresholds for monitoring warnings, in seconds
+factory_settings["lbu_status_default"] = {
+    "threshold_warning": 1800,
+    "threshold_critical": 3600
+}
+
+
+def parse_raw_lbu_status_values(info):
+    infos = []
+    for line in info:
+        dummy = {}
+        dummy["time"] = int(line[0])
+        dummy["filepath"] = line[2]
+        if line[1] == "A":
+            dummy["change"] = "added"
+        elif line[1] == "U":
+            dummy["change"] = "modified"
+        else:
+            dummy["change"] = "deleted"
+        infos.append(dummy)
+    return infos
+
+
+def check_lbu_status(item, params, info):
+    values = parse_raw_lbu_status_values(info)
+    for value in values:
+        if value["change"] != "deleted":
+            if params["threshold_critical"] <= value["time"]:
+                return (2, "File/Folder '" + value["filepath"] + "' has been " + value["change"] +
+                        " and hasn't been commited since " + str(value["time"]) + " seconds!")
+            elif params["threshold_warning"] <= value["time"] < params["threshold_critical"]:
+                return (1, "File/Folder '" + value["filepath"] + "' has been " + value["change"] +
+                        " and hasn't been commited since " + str(value["time"]) + " seconds!")
+        else:
+            return (2, "File/Folder '" + value["filepath"] + "' has been " + value["change"] +
+                       " and hasn't been commited!")
+    return (0, "No important changes in lbu status.")
+
+
+def inventory_lbu_status(checktype, info):
+    yield None, None
+
+
+# check registry
+check_info["lbu_status"] = {
+    'check_function':          check_lbu_status,
+    'inventory_function':      inventory_lbu_status,
+    'service_description':     'LBU Status',
+    'default_levels_variable': 'lbu_status_default',
+    'has_perfdata':            False
+}
