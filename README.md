@@ -12,7 +12,7 @@ Install
 -------
 
 Download the provided check-mk package `lbu_status-x.y.mkp` and install it using *check-mk*'s 
-[package manager](https://mathias-kettner.de/checkmk_packaging.html#H1:Installation,%20Update%20and%20Removal).
+[package manager](https://mathias-kettner.de/cms_mkps.html#Installation%20eines%20MKPs-1).
 
 
 ```console
