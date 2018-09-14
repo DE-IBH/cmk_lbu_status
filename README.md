@@ -5,7 +5,7 @@ check-mk plugin for Alpine Linux LBU Status
 About
 -----
 
-This check-mk package retrieves the monitor states of non-commited changes with `lbu status` using ssh to connect onto the device.
+This check-mk package retrieves the monitor states of non-commited changes with `lbu status` using ssh to connect to the host.
 
 
 Install
