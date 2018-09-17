@@ -24,7 +24,7 @@
 #   along with this package; if not, write to the Free Software
 #   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
-# Example output
+# Example output from agent
 # changes in seconds change_action file
 # <<<lbu_status>>>
 # 1940 A /etc/added.txt
@@ -54,23 +54,71 @@ def parse_raw_lbu_status_values(info):
     return infos
 
 
+def setTimeString(seconds):
+    time_struct_value = time.gmtime(seconds)
+    days = int(time.strftime("%j", time_struct_value)) - 1
+    yearString = ""
+    dayString = ""
+    # get year string
+    if time_struct_value.tm_year > 1970:
+        yearString = str(1970 - time_struct_value.tm_year) + "y "
+
+    # get day string
+    if days > 0:
+        dayString = str(days) + "d "
+
+    # get clock string
+    if time_struct_value.tm_hour != 0:
+        clockString = time.strftime("%Hh %Mmin %Ss", time_struct_value)
+    elif time_struct_value.tm_min != 0:
+        clockString = time.strftime("%Mmin %Ss", time_struct_value)
+    elif time_struct_value.tm_sec != 0:
+        clockString = time.strftime("%Ss", time_struct_value)
+    else:
+        # File was deleted with, so no time has been detected for the change
+        clockString = "unknown"
+
+    return yearString + dayString + clockString
+
+
 def check_lbu_status(item, params, info):
     values = parse_raw_lbu_status_values(info)
     warn = params["threshold_warning"]
     crit = params["threshold_critical"]
+    max_time = 0
+    status = 0
+    status_deleted = True
 
     for value in values:
         if value["change"] != "deleted":
             if crit <= value["time"]:
-                return (2, "File/Folder '" + value["filepath"] + "' has been " + value["change"] +
-                        " and hasn't been commited since " + str(value["time"]) + " seconds!")
+                if status < 2:
+                    status = 2
             elif warn <= value["time"] < crit:
-                return (1, "File/Folder '" + value["filepath"] + "' has been " + value["change"] +
-                        " and hasn't been commited since " + str(value["time"]) + " seconds!")
+                if status < 1:
+                    status = 1
+            if max_time < value["time"]:
+                max_time = value["time"]
+            status_deleted = False
         else:
-            return (2, "File/Folder '" + value["filepath"] + "' has been " + value["change"] +
-                       " and hasn't been commited!")
-    return (0, "No important changes in lbu status.")
+            if status < 2:
+                status = 2
+
+    number_of_changes = len(values)
+    if number_of_changes == 0:
+        message = "No changes pending"
+    elif number_of_changes == 1:
+        if status_deleted:
+            message = str(number_of_changes) + " change pending"
+        else:
+            message = str(number_of_changes) + " change pending since: " + setTimeString(max_time)
+    else:
+        if status_deleted:
+            message = str(number_of_changes) + " changes pending"
+        else:
+            message = str(number_of_changes) + " changes pending since: " + setTimeString(max_time)
+
+    return (status, message)
 
 
 def inventory_lbu_status(checktype, info):
