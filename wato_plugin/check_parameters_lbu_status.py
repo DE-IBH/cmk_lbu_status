@@ -36,14 +36,14 @@ register_check_parameters(
           elements = [
              ("threshold_warning",
                    Integer(
-                       title = _("Time until a warning message appears for an added or modified element."),
+                       title = _("Warning at "),
                        unit = _("seconds"),
                        default_value = 1800,
                    ),
              ),
              ("threshold_critical",
                    Integer(
-                       title = _("Time until a critical message appears for an added or modified element"),
+                       title = _("Critical at "),
                        unit = _("seconds"),
                        default_value = 3600,
                    ),
