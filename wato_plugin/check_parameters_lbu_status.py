@@ -30,7 +30,7 @@ subgroup_applications = _("Applications, Processes & Services")
 register_check_parameters(
     subgroup_applications,
     "lbu_status",
-    _("Thresholds for LBU status"),
+    _("LBU status"),
     Dictionary(
           help=_("Thresholds when to send warning or critical message."),
           elements = [
