@@ -40,13 +40,10 @@ factory_settings["lbu_status_default"] = {
 
 def parse_raw_lbu_status_values(info):
     infos = []
-    if len(info) > 0:
-        infoString = "\nsecs_change mode file"
-    else:
-        infoString = ""
+    infoString = ""
 
     for line in info:
-        infoString += "\n" + line[0] + " " + line[1] + " " + line[2]
+        infoString += "\n" + line[1] + " " + line[2] + " (" + setTimeString(int(line[0])) + ")"
         dummy = {}
         dummy["time"] = int(line[0])
         dummy["filepath"] = line[2]
