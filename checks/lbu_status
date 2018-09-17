@@ -25,7 +25,7 @@
 #   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301 USA
 
 # Example output from agent
-# changes in seconds change_action file
+# changes_since_seconds change_action file
 # <<<lbu_status>>>
 # 1940 A /etc/added.txt
 # 275 U /etc/modified.txt
@@ -40,7 +40,13 @@ factory_settings["lbu_status_default"] = {
 
 def parse_raw_lbu_status_values(info):
     infos = []
+    if len(info) > 0:
+        infoString = "\nsecs_change mode file"
+    else:
+        infoString = ""
+
     for line in info:
+        infoString += "\n" + line[0] + " " + line[1] + " " + line[2]
         dummy = {}
         dummy["time"] = int(line[0])
         dummy["filepath"] = line[2]
@@ -51,7 +57,7 @@ def parse_raw_lbu_status_values(info):
         else:
             dummy["change"] = "deleted"
         infos.append(dummy)
-    return infos
+    return infos, infoString
 
 
 def setTimeString(seconds):
@@ -82,7 +88,7 @@ def setTimeString(seconds):
 
 
 def check_lbu_status(item, params, info):
-    values = parse_raw_lbu_status_values(info)
+    values, valuesString = parse_raw_lbu_status_values(info)
     warn = params["threshold_warning"]
     crit = params["threshold_critical"]
     max_time = 0
@@ -118,7 +124,7 @@ def check_lbu_status(item, params, info):
         else:
             message = str(number_of_changes) + " changes pending since: " + setTimeString(max_time)
 
-    return (status, message)
+    return (status, message + valuesString)
 
 
 def inventory_lbu_status(checktype, info):
