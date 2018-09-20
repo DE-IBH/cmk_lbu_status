@@ -4,7 +4,7 @@
 # cmk_lbu_status - check-mk plugin for Alpine Linux lbu status
 #
 # Authors:
-#   Philipp Kilian <liske@ibh.de>
+#   Philipp Kilian <kilian@ibh.de>
 #
 # Copyright Holder:
 #   2018 (C) IBH IT-Service GmbH [http://www.ibh.de/]

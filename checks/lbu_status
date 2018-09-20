@@ -4,7 +4,7 @@
 # cmk_lbu_status - check-mk plugin for Alpine Linux lbu status
 #
 # Authors:
-#   Philipp Kilian <liske@ibh.de>
+#   Philipp Kilian <kilian@ibh.de>
 #
 # Copyright Holder:
 #   2018 (C) IBH IT-Service GmbH [http://www.ibh.de/]
@@ -112,14 +112,14 @@ def check_lbu_status(item, params, info):
         message = "No changes pending"
     elif number_of_changes == 1:
         if status_deleted:
-            message = str(number_of_changes) + " change pending"
+            message = str(number_of_changes) + " pending change"
         else:
-            message = str(number_of_changes) + " change pending since: " + setTimeString(max_time)
+            message = str(number_of_changes) + " pending change since: " + setTimeString(max_time)
     else:
         if status_deleted:
-            message = str(number_of_changes) + " changes pending"
+            message = str(number_of_changes) + " pending changes"
         else:
-            message = str(number_of_changes) + " changes pending since: " + setTimeString(max_time)
+            message = str(number_of_changes) + " pending changes since: " + setTimeString(max_time)
 
     return (status, message + valuesString)
 
