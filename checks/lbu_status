@@ -109,17 +109,17 @@ def check_lbu_status(item, params, info):
 
     number_of_changes = len(values)
     if number_of_changes == 0:
-        message = "No changes pending"
+        message = "no pending changes"
     elif number_of_changes == 1:
         if status_deleted:
             message = str(number_of_changes) + " pending change"
         else:
-            message = str(number_of_changes) + " pending change since: " + setTimeString(max_time)
+            message = str(number_of_changes) + " pending change for " + setTimeString(max_time)
     else:
         if status_deleted:
             message = str(number_of_changes) + " pending changes"
         else:
-            message = str(number_of_changes) + " pending changes since: " + setTimeString(max_time)
+            message = str(number_of_changes) + " pending changes for " + setTimeString(max_time)
 
     return (status, message + valuesString)
 
