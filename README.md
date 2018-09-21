@@ -22,7 +22,7 @@ Download the provided check-mk package `lbu_status-x.y.mkp` and install it using
 Setup
 -----
 
-This package checks the time of changes of  `lbu status` for added, modified files and gives a warning or 
+This package checks the time of changes of  `lbu status` for added and modified files. It sends a warning or 
 critical message based on the parameters `threshold_warning` and `threshold_critical`.
 
 For deleted files it gives always a critical message
