@@ -16,7 +16,7 @@ Download the Check_MK package from [GitHub Releases](https://github.com/DE-IBH/c
 
 
 ```console
-OMD[mysite]:~$ mkp install [..]/lbu_status-x.y.mkp
+OMD[mysite]:~$ mkp install lbu_status-x.y.mkp
 ```
 
 Setup
