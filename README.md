@@ -1,28 +1,25 @@
-check-mk plugin for Alpine Linux LBU Status
+Check_MK plugin for Alpine Linux LBU Status
 ===========================================
 
 
 About
 -----
 
-This check-mk package retrieves the monitor states of non-commited changes with `lbu status` using ssh to connect to the host.
+This Check_MK package retrieves the monitor states of non-commited changes of Alpine Linux's *Local Backup* (`lbu status`). The package contains an agent plugin which is required to be deployed to the target hosts.
 
 
 Install
 -------
 
-Download the provided check-mk package `lbu_status-x.y.mkp` and install it using *check-mk*'s 
+Download the Check_MK package from [GitHub Releases](https://github.com/DE-IBH/cmk_lbu_status/releases) and install it using Check_MK's 
 [package manager](https://mathias-kettner.de/cms_mkps.html#Installation%20eines%20MKPs-1).
 
-
 ```console
-# mkp install [..]/lbu_status-x.y.mkp
+OMD[mysite]:~$ mkp install lbu_status-x.y.mkp
 ```
+
 
 Setup
 -----
 
-This package checks the time of changes of  `lbu status` for added, modified files and gives a warning or 
-critical message based on the parameters `threshold_warning` and `threshold_critical`.
-
-For deleted files it gives always a critical message
+When the plugin detects pending changes it switch to a warning or critical status depending of the threshold check parameters. The parameters `threshold_warning` and `threshold_critical` can be configured using WATO. Deletions always trigger a critical status.

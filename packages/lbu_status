@@ -1,6 +1,6 @@
 {'author': 'Philipp Kilian',
- 'description': 'This package contains a check plugin that checks the status of LBU on Alpine Linux devices.',
- 'download_url': 'http://example.com/lbu_status/',
+ 'description': 'This package contains a check plugin that checks the status of LBU on Alpine Linux hosts.',
+ 'download_url': 'https://github.com/DE-IBH/cmk_lbu_status/',
  'files': {'agents': ['plugins/lbu_status'],
            'checkman': ['lbu_status'],
            'checks': ['lbu_status'],
