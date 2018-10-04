@@ -50,7 +50,8 @@ for result in pipeout:
         filepath = "/" + result.split(" ")[1]
     if changemode == "A" or changemode == "U":
         changetime = dt.fromtimestamp(os.path.getmtime(filepath))
-        seconds = (current_time - changetime).seconds
+        timediff = current_time - changetime
+        seconds = timediff.seconds + timediff.days * 3600
         print seconds, changemode, filepath
     else:
         print 0, changemode, filepath
