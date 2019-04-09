@@ -43,7 +43,7 @@ def parse_raw_lbu_status_values(info):
     infoString = ""
 
     for line in info:
-        infoString += "\n" + line[1] + " " + line[2] + " (" + setTimeString(int(line[0])) + ")"
+        infoString += "\n" + line[1] + " " + line[2] + " (" + setTimeString_lbu_status(int(line[0])) + ")"
         dummy = {}
         dummy["time"] = int(line[0])
         dummy["filepath"] = line[2]
@@ -57,7 +57,7 @@ def parse_raw_lbu_status_values(info):
     return infos, infoString
 
 
-def setTimeString(seconds):
+def setTimeString_lbu_status(seconds):
     time_struct_value = time.gmtime(seconds)
     days = int(time.strftime("%j", time_struct_value)) - 1
     yearString = ""
@@ -72,9 +72,9 @@ def setTimeString(seconds):
 
     # get clock string
     if time_struct_value.tm_hour != 0:
-        clockString = time.strftime("%Hh %Mmin %Ss", time_struct_value)
+        clockString = time.strftime("%Hh ", time_struct_value)
     elif time_struct_value.tm_min != 0:
-        clockString = time.strftime("%Mmin %Ss", time_struct_value)
+        clockString = time.strftime("%Mmin ", time_struct_value)
     elif time_struct_value.tm_sec != 0:
         clockString = time.strftime("%Ss", time_struct_value)
     else:
@@ -114,12 +114,12 @@ def check_lbu_status(item, params, info):
         if status_deleted:
             message = str(number_of_changes) + " pending change"
         else:
-            message = str(number_of_changes) + " pending change for " + setTimeString(max_time)
+            message = str(number_of_changes) + " pending change for " + setTimeString_lbu_status(max_time)
     else:
         if status_deleted:
             message = str(number_of_changes) + " pending changes"
         else:
-            message = str(number_of_changes) + " pending changes for " + setTimeString(max_time)
+            message = str(number_of_changes) + " pending changes for " + setTimeString_lbu_status(max_time)
 
     return (status, message + valuesString)
 

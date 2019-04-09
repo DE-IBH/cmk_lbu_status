@@ -7,7 +7,7 @@
 # |           | |___| | | |  __/ (__|   <    | |  | | . \            |
 # |            \____|_| |_|\___|\___|_|\_\___|_|  |_|_|\_\           |
 # |                                                                  |
-# | Copyright Mathias Kettner 2014             mk@mathias-kettner.de |
+# | Copyright Philipp Kilian 2018                      kilian@ibh.de |
 # +------------------------------------------------------------------+
 #
 # This file is part of Check_MK.
@@ -25,7 +25,6 @@
 # Boston, MA 02110-1301 USA.
 
 group = "checkparams"
-subgroup_applications = _("Applications, Processes & Services")
 
 register_check_parameters(
     subgroup_applications,
@@ -33,19 +32,19 @@ register_check_parameters(
     _("LBU status"),
     Dictionary(
           help=_("Thresholds when to send warning or critical message."),
-          elements = [
+          elements=[
              ("threshold_warning",
                    Integer(
-                       title = _("Warning at "),
-                       unit = _("seconds"),
-                       default_value = 1800,
+                       title=_("Warning at "),
+                       unit=_("seconds"),
+                       default_value=1800
                    ),
              ),
              ("threshold_critical",
                    Integer(
-                       title = _("Critical at "),
-                       unit = _("seconds"),
-                       default_value = 3600,
+                       title=_("Critical at "),
+                       unit=_("seconds"),
+                       default_value=3600
                    ),
              ),
          ],
