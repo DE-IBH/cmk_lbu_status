@@ -58,30 +58,33 @@ def parse_raw_lbu_status_values(info):
 
 
 def setTimeString_lbu_status(seconds):
-    time_struct_value = time.gmtime(seconds)
-    days = int(time.strftime("%j", time_struct_value)) - 1
-    yearString = ""
-    dayString = ""
-    clockString = ""
-    # get year string
-    if time_struct_value.tm_year > 1970:
-        yearString = str(1970 - time_struct_value.tm_year) + "y "
+    if seconds > 0:
+        time_struct_value = time.gmtime(seconds)
+        days = int(time.strftime("%j", time_struct_value)) - 1
+        yearString = ""
+        dayString = ""
+        clockString = ""
+        # get year string
+        if time_struct_value.tm_year > 1970:
+            yearString = str(1970 - time_struct_value.tm_year) + "y "
 
-    # get day string
-    if days > 0:
-        dayString = str(days) + "d "
+        # get day string
+        if days > 0:
+            dayString = str(days) + "d "
 
-    # get clock string
-    if time_struct_value.tm_hour != 0:
-        clockString += time.strftime("%Hh ", time_struct_value)
-    if time_struct_value.tm_min != 0:
-        clockString += time.strftime("%Mmin ", time_struct_value)
-    if time_struct_value.tm_sec != 0:
-        clockString += time.strftime("%Ss", time_struct_value)
-    if clockString[-1] == " ":
-        clockString = clockString[:-1]
+        # get clock string
+        if time_struct_value.tm_hour != 0:
+            clockString += time.strftime("%Hh ", time_struct_value)
+        if time_struct_value.tm_min != 0:
+            clockString += time.strftime("%Mmin ", time_struct_value)
+        if time_struct_value.tm_sec != 0:
+            clockString += time.strftime("%Ss", time_struct_value)
+        if clockString[-1] == " ":
+            clockString = clockString[:-1]
 
-    return yearString + dayString + clockString
+        return yearString + dayString + clockString
+    else:
+        return "deletion time unknown"
 
 
 def check_lbu_status(item, params, info):
