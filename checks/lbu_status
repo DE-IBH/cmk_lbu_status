@@ -127,7 +127,7 @@ def check_lbu_status(item, params, info):
     return status, message + valuesString
 
 
-def inventory_lbu_status(*info):
+def inventory_lbu_status(info):
     yield None, None
 
 
