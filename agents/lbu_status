@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- encoding: utf-8; py-indent-offset: 4 -*-
 
 # cmk_lbu_status - check-mk plugin for Alpine Linux lbu status
@@ -31,13 +31,13 @@ import os
 from datetime import datetime as dt
 
 try:
-    pipeout = sp.check_output(["lbu", "status"])
+    pipeout = sp.check_output(["lbu", "status"]).decode('utf-8')
 except:
     exit()
 
 current_time = dt.now()
 
-print "<<<lbu_status>>>"
+print("<<<lbu_status>>>")
 pipeout = pipeout.split("\n")[:-1]
 for result in pipeout:
     changemode = result.split(" ")[0]
@@ -52,6 +52,6 @@ for result in pipeout:
         changetime = dt.fromtimestamp(os.lstat(filepath).st_mtime)
         timediff = current_time - changetime
         seconds = timediff.seconds + timediff.days * 3600
-        print seconds, changemode, filepath
+        print(seconds, changemode, filepath)
     else:
-        print 0, changemode, filepath
+        print(0, changemode, filepath)
