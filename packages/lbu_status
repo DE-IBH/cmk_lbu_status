@@ -7,6 +7,6 @@
            'web': ['plugins/wato/lbu_status.py']},
  'name': 'lbu_status',
  'title': 'LBU Status',
- 'version': '1.0.2',
+ 'version': '1.1.0',
  'version.min_required': '1.2.8p27',
  'version.packaged': '1.6.0p3'}
