@@ -52,7 +52,7 @@ if pipeout[0][:3] != "lbu":
         if changemode == "A" or changemode == "U":
             changetime = dt.fromtimestamp(os.lstat(filepath).st_mtime)
             timediff = current_time - changetime
-            seconds = timediff.seconds + timediff.days * 3600
+            seconds = timediff.seconds + timediff.days * 86400
             print(seconds, changemode, filepath)
         else:
             print(0, changemode, filepath)
