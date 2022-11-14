@@ -37,7 +37,7 @@ except:
 current_time = dt.now()
 
 pipeout = pipeout.split("\n")[:-1]
-if pipeout[0][:3].lower() != "lbu":
+if not pipeout or pipeout[0][:3].lower() != "lbu":
     print("<<<lbu_status>>>")
     for result in pipeout:
         changemode = result.split(" ")[0]
