@@ -58,19 +58,18 @@ class LBU:
 def check_lbu_status(params: Mapping[str, Any], section: List[LBU]) -> CheckResult:
     warn, crit = params.get("levels", (1800, 3600))
     max_time = 0
-    deleted = True
+    deleted = False
     state = State.OK
 
     number_of_changes = len(section)
     if number_of_changes == 0:
         summary = "no pending changes"
-
     elif number_of_changes == 1:
         max_time = section[0].get_time_in_seconds()
         if section[0].mode == "D":
             summary = str(number_of_changes) + " pending change"
+            deleted = True
         else:
-            deleted = False
             summary = f"{number_of_changes} pending change since {section[0].get_time_string()}"
     else:
         max_time_string = ""
@@ -80,7 +79,8 @@ def check_lbu_status(params: Mapping[str, Any], section: List[LBU]) -> CheckResu
                 if max_time < seconds:
                     max_time = seconds
                     max_time_string = section[lbu_index].get_time_string()
-                deleted = False
+            else:
+                deleted = True
         if deleted:
             summary = f"{number_of_changes} pending changes"
         else:
@@ -115,6 +115,7 @@ register.check_plugin(
     service_name="LBU Status",
     discovery_function=discovery_lbu_status,
     check_function=check_lbu_status,
+    check_ruleset_name="lbu_status",
     check_default_parameters={"levels": (1800, 3600)}
 )
 

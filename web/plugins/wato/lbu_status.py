@@ -44,5 +44,5 @@ rulespec_registry.register(
         group=RulespecGroupCheckParametersOperatingSystem,
         match_type="dict",
         parameter_valuespec=_parameter_valuespec_lbu_status_levels,
-        title=lambda: _("Proxmox VE disk percentage used"),
+        title=lambda: _("LBU Status thresholds"),
     ))
