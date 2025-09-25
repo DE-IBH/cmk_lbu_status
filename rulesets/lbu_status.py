@@ -25,7 +25,7 @@ def _parameter_form_lbu_status():
             "warning_state": DictElement(
                 parameter_form = ServiceState(
                     title = Title("Status when warning"),
-                    prefill = DefaultValue(value=ServiceState.CRIT)
+                    prefill = DefaultValue(value=ServiceState.WARN)
                 )
             ),
             "critical_state": DictElement(
