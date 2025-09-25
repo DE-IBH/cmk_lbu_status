@@ -10,13 +10,15 @@ def _parameter_form_lbu_status():
         elements = {
             "warning_seconds": DictElement(
                 parameter_form = Integer(
-                    title = Title("Seconds until warning State"),
+                    title = Title("Time until warning State"),
+                    unit_symbol = "seconds",
                     prefill = DefaultValue(value=1800)
                 )
             ),
             "critical_seconds": DictElement(
                 parameter_form = Integer(
-                    title = Title("Seconds until critical State"),
+                    title = Title("Time until critical State"),
+                    unit_symbol = "seconds",
                     prefill = DefaultValue(value=3600)
                 )
             ),
@@ -36,7 +38,7 @@ def _parameter_form_lbu_status():
     )
 
 
-rule_spec_bind9 = CheckParameters(
+rule_spec_lbu_status = CheckParameters(
     name = "lbu_status_rules",
     title = Title("LBU Status"),
     topic = Topic.OPERATING_SYSTEM,
