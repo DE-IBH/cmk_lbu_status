@@ -59,7 +59,7 @@ class LBU:
         return (dt.now() - self.time).strftime("%Y-%m-%d %H:%M:%S")
 
 
-def check_lbu_status(params: Mapping[str, Any], section: List[LBU]) -> CheckResult:
+def check_lbu_status(params: Mapping[str, Any], section: List[LBU]):
     warn = params["warning_seconds"]
     crit = params["critical_seconds"]
     max_time = 0
@@ -102,7 +102,7 @@ def check_lbu_status(params: Mapping[str, Any], section: List[LBU]) -> CheckResu
     yield Result(state=state, summary=summary, details=details)
 
 
-def discovery_lbu_status(section: List[LBU]) -> InventoryResult:
+def discovery_lbu_status(section: List[LBU]):
     yield Service()
 
 
