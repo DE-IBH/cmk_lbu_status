@@ -98,9 +98,9 @@ def check_lbu_status(params: Mapping[str, Any], section: List[LBU]):
             summary = f"{number_of_changes} pending change since {max_time_string}"
 
     if deleted or crit <= max_time:
-        state = params["critical_seconds"]
+        state = params["critical_state"]
     elif warn <= max_time < crit:
-        state = params["warning_seconds"]
+        state = params["warning_state"]
 
     yield Result(state=state, summary=summary, details=details)
 
