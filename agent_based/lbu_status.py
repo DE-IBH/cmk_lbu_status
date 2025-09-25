@@ -65,7 +65,7 @@ def check_lbu_status(params: Mapping[str, Any], section: List[LBU]):
     max_time = 0
     deleted = False
     state = State.OK
-    details = ""
+    details = None
 
     number_of_changes = len(section)
     if number_of_changes == 0:
@@ -88,7 +88,10 @@ def check_lbu_status(params: Mapping[str, Any], section: List[LBU]):
                     max_time_string = lbu.get_time_string
             else:
                 deleted = True
-            details += f"{lbu.__str__()}\n"
+            if details is None:
+                details = f"{lbu.__str__()}"
+            else:
+                details += f"\n{lbu.__str__()}"
         if deleted:
             summary = f"{number_of_changes} pending changes"
         else:
