@@ -6,7 +6,7 @@
 #   Philipp Kilian <kilian@ibh.de>
 #
 # Copyright Holder:
-#   2018-2022 (C) IBH IT-Service GmbH [http://www.ibh.de/]
+#   2018-2025 (C) IBH IT-Service GmbH [http://www.ibh.de/]
 #
 # License:
 #   This program is free software; you can redistribute it and/or modify
