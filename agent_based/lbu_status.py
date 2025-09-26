@@ -35,6 +35,7 @@ from datetime import datetime as dt
 from datetime import timedelta as td
 
 from cmk.agent_based.v2 import AgentSection, CheckPlugin, Metric, Result, Service, State, StringTable
+from cmk.rulesets.v1.form_specs import ServiceState
 
 
 class LBU:
@@ -131,9 +132,9 @@ check_plugin_lbu_status = CheckPlugin(
     check_ruleset_name="lbu_status_rules",
     check_default_parameters={
         "critical_seconds": 3600,
-        "critical_state": State.CRIT,
+        "critical_state": ServiceState.CRIT,
         "warning_seconds": 1800,
-        "warning_state": State.WARN
+        "warning_state": ServiceState.WARN
     }
 )
 
